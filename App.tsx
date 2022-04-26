@@ -9,8 +9,8 @@ import AppLoading from 'expo-app-loading';
 
 
 // import { Welcome } from './src/pages/Welcome';
-
-import { UserIdentification } from './src/pages/UserIdentification';
+// import { UserIdentification } from './src/pages/UserIdentification';
+import { Confirmation } from './src/pages/Confirmation';
 
 export default function App(){
   const [ fonstLoaded ] = useFonts({
@@ -27,7 +27,7 @@ export default function App(){
   return(
     <>
       <StatusBar barStyle="light-content" backgroundColor="#fff" />
-      <UserIdentification />
+      <Confirmation />
     </>
   );
 }

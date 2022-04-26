@@ -9,6 +9,7 @@ import AppLoading from 'expo-app-loading';
 
 
 import Routes from './src/routes'
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 export default function App(){
   const [ fonstLoaded ] = useFonts({

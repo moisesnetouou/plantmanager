@@ -1,3 +1,4 @@
+import { useNavigation } from '@react-navigation/native';
 import React, { useState } from 'react';
 import {
   SafeAreaView,
@@ -15,6 +16,7 @@ import colors from '../styles/colors';
 import fonts from '../styles/fonts';
 
 export function UserIdentification(){
+  const navigation = useNavigation();
   const [isFocused, setIsFocused] = useState(false);
   const [isFilled, setIsFilled] = useState(false);
   const [name, setName] = useState<string>();
@@ -31,6 +33,13 @@ export function UserIdentification(){
   function handleInputChange(value: string){
     setIsFilled(!!value); // transforma em um conteudo logico.
     setName(value);
+  }
+
+  
+
+  function handleSubmit(){
+    //@ts-ignore
+    navigation.navigate('Confirmation');
   }
 
   return(
@@ -65,7 +74,10 @@ export function UserIdentification(){
 
 
             <View style={styles.footer}>
-              <Button />
+              <Button 
+                title="Confirmar"
+                onPress={handleSubmit}
+              />
             </View>
           </View>
         </View>

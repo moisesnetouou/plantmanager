@@ -8,7 +8,9 @@ import { StatusBar } from 'react-native';
 import AppLoading from 'expo-app-loading';
 
 
-import { Welcome } from './src/pages/Welcome';
+// import { Welcome } from './src/pages/Welcome';
+
+import { UserIdentification } from './src/pages/UserIdentification';
 
 export default function App(){
   const [ fonstLoaded ] = useFonts({
@@ -25,7 +27,7 @@ export default function App(){
   return(
     <>
       <StatusBar barStyle="light-content" backgroundColor="#fff" />
-      <Welcome />
+      <UserIdentification />
     </>
   );
 }

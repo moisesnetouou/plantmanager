@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, Text, View, FlatList } from 'react-native';
+import { StyleSheet, Text, View, FlatList, ActivityIndicator } from 'react-native';
 import { EnvironmentButton } from '../components/EnvironmentButton';
 
 
@@ -32,7 +32,7 @@ interface PlantProps {
 export function PlantSelect(){
   const [environments, setEnvironments] = useState<EnvironmentProps[]>();
   const [plants, setPlants] = useState<PlantProps[]>([]);
-  const [filteredPlants, setFilteredPlants] = useState<PlantProps[]>(); // estado auxiliar
+  const [filteredPlants, setFilteredPlants] = useState<PlantProps[]>([]); // estado auxiliar
   const [environmentSelected, setEnvironmentSelected] = useState('all');
   const [loading, setLoading] = useState(true);
 
@@ -55,14 +55,15 @@ export function PlantSelect(){
 
   async function fetchPlants(){
     const {data} = await api
-    .get(`plants?_sort=name&_order=asc&_page=${page}&_limit=4`); // ordenar
+    .get(`plants?_sort=name&_order=asc&_page=${page}&_limit=8`); // ordenar
 
-    if(!data){
+    if(!data)
       return setLoading(true);
-    }
+    
 
     if(page > 1){
       setPlants(oldValue => [...oldValue, ...data]); // juntando os dados de antes com os de depois
+      setFilteredPlants(oldValue => [...oldValue, ...data]);
     } else {
       setPlants(data);
       setFilteredPlants(data);
@@ -126,11 +127,7 @@ export function PlantSelect(){
           data={environments}
           horizontal
           showsHorizontalScrollIndicator={false}
-          contentContainerStyle={styles.environmentList}
-          onEndReachedThreshold={0.1}
-          onEndReached={({distanceFromEnd}) => 
-            handleFetchMore(distanceFromEnd)
-          }
+          contentContainerStyle={styles.environmentList}    
           renderItem={({item})=> (
             <EnvironmentButton 
               title={item.title}
@@ -144,6 +141,7 @@ export function PlantSelect(){
       <View style={styles.plants}>
           <FlatList 
             data={filteredPlants}
+            keyExtractor={(item) => String(item.id)}
             showsVerticalScrollIndicator={false}
             numColumns={2}
             renderItem={({item}) => (
@@ -151,6 +149,14 @@ export function PlantSelect(){
                 data={item}
               />
             )}
+            ListFooterComponent={
+              loadingMore 
+              ?<ActivityIndicator color={colors.green} />
+              : <></>
+            }
+            onEndReachedThreshold={0.1}
+            onEndReached={({distanceFromEnd}) => handleFetchMore(distanceFromEnd)
+          }
           />
       </View>
       

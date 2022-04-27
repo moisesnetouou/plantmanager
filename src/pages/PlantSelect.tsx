@@ -10,6 +10,7 @@ import { Load } from '../components/Load';
 
 import colors from '../styles/colors';
 import fonts from '../styles/fonts';
+import { useNavigation } from '@react-navigation/native';
 
 interface EnvironmentProps {
   key: string;
@@ -38,6 +39,8 @@ export function PlantSelect(){
 
   const [page, setPage] = useState(1);
   const [loadingMore, setLoadingMore] = useState(true);
+
+  const navigation = useNavigation();
 
   async function fetchEnvironment(){
     const {data} = await api
@@ -95,6 +98,11 @@ export function PlantSelect(){
     fetchPlants();
   }
 
+  function handlePlantSelect(plant: PlantProps){
+    //@ts-ignore
+    navigation.navigate('PlantSave', {plant}); // passando os dados
+  }
+
   useEffect(() => { 
     fetchEnvironment();
   }, [])
@@ -147,6 +155,7 @@ export function PlantSelect(){
             renderItem={({item}) => (
               <PlantCardPrimary 
                 data={item}
+                onPress={()=> handlePlantSelect(item)}
               />
             )}
             ListFooterComponent={

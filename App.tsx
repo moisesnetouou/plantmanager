@@ -4,7 +4,7 @@ import {
   Jost_400Regular,
   Jost_600SemiBold
 } from '@expo-google-fonts/jost';
-import { StatusBar } from 'react-native';
+import { StatusBar } from 'expo-status-bar';
 import AppLoading from 'expo-app-loading';
 // import * as Notifications from 'expo-notifications';
 
@@ -44,7 +44,7 @@ export default function App(){
 
   return(
     <>
-      <StatusBar barStyle="dark-content" backgroundColor="#fff" />
+      <StatusBar style="auto" />
       <Routes />
     </>
   );

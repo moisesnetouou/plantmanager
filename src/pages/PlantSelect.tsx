@@ -38,7 +38,6 @@ export function PlantSelect(){
 
   const [page, setPage] = useState(1);
   const [loadingMore, setLoadingMore] = useState(true);
-  const [loadedAll, setLoadedAll] = useState(false);
 
   async function fetchEnvironment(){
     const {data} = await api
@@ -125,6 +124,7 @@ export function PlantSelect(){
       <View>
         <FlatList 
           data={environments}
+          keyExtractor={(item) => String(item.key)}
           horizontal
           showsHorizontalScrollIndicator={false}
           contentContainerStyle={styles.environmentList}    

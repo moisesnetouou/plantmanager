@@ -19,7 +19,7 @@ import colors from '../styles/colors';
 import { getBottomSpace } from 'react-native-iphone-x-helper';
 import fonts from '../styles/fonts';
 import { format, isBefore } from 'date-fns';
-import { PlantProps } from '../libs/storage';
+import { PlantProps, savePlant } from '../libs/storage';
 
 interface Params {
   plant: PlantProps;
@@ -49,6 +49,17 @@ export function PlantSave(){
 
   function handleOpenDateTimePickerForAndroid(){
     setShowDatePicker(oldState => !oldState)
+  }
+
+  async function handleSave(){
+    try {
+      await savePlant({
+        ...plant,
+        dateTimeNotification: selectedDateTime
+      });
+    } catch (error) {
+      Alert.alert('Não foi possível salvar. 😭');
+    }
   }
 
   return(
@@ -109,7 +120,7 @@ export function PlantSave(){
 
         <Button
           title="Cadastrar planta"
-          onPress={()=> {}}
+          onPress={handleSave}
         />
       </View>
     </View>
